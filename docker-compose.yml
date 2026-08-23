@@ -30,7 +30,9 @@ services:
       - maven-app-network
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     container_name: maven-nginx
 
     ports:
