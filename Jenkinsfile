@@ -22,6 +22,21 @@ pipeline {
                 sh 'mvn package'
             }
         }
+        stage('Debug Deploy') {
+            steps {
+                sh '''
+                    echo "WORKSPACE: $WORKSPACE"
+        
+                    ls -ld "$WORKSPACE/nginx"
+                    ls -ld "$WORKSPACE/nginx/default.conf"
+        
+                    test -f "$WORKSPACE/nginx/default.conf" && echo "default.conf is a FILE"
+                    test -d "$WORKSPACE/nginx/default.conf" && echo "default.conf is a DIRECTORY"
+        
+                    docker compose config
+                '''
+            }
+        }
         stage('Deploy') {
             steps {
                 sh '''
