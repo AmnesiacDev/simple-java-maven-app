@@ -1,25 +1,25 @@
 package com.mycompany.app;
 
-import org.junit.jupiter.api.Test;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+@SpringBootApplication
+@RestController
+public class AppTest {
 
-/**
- * Unit test for simple App.
- */
-public class AppTest
-{
-    @Test
-    public void testAppConstructor() {
-        App app1 = new App();
-        App app2 = new App();
-        assertEquals(app1.getMessage(), app2.getMessage());
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
     }
 
-    @Test
-    public void testAppMessage()
-    {
-        App app = new App();
-        assertEquals("Hello World!", app.getMessage());
+    @GetMapping("/")
+    public String home() {
+        return "Hello World!";
+    }
+
+    @GetMapping("/health")
+    public String health() {
+        return "Application is healthy";
     }
 }
