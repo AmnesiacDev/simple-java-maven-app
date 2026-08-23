@@ -22,19 +22,10 @@ pipeline {
                 sh 'mvn package'
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    def imageName = "java-maven-app:${env.BUILD_NUMBER}"
-                    sh "docker build -t ${imageName} ."
-                }
-            }
-        }
         stage('Deploy') {
             steps {
                 sh '''
-                    docker rm -f java-maven-app || true
-                    docker run --name java-maven-app java-maven-app:${BUILD_NUMBER}
+                    docker compose up -d --build
                 '''
             }
         }
